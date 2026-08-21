@@ -36,6 +36,23 @@ for p in /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh \
   fi
 done
 
+ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS=(forward-word emacs-forward-word)
+
+_tab_partial_or_complete() {
+  local b="$BUFFER"
+  zle forward-word
+  if [[ "$BUFFER" == "$b" ]]; then
+    if zle -la | grep -q '^fzf-completion$'; then
+      zle fzf-completion
+    else
+      zle expand-or-complete
+    fi
+  fi
+}
+zle -N _tab_partial_or_complete
+bindkey '^I' _tab_partial_or_complete
+bindkey '^[[Z' autosuggest-accept
+
 for p in /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
          /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh \
          "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"; do
@@ -44,3 +61,4 @@ for p in /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
     break
   fi
 done
+

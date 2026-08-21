@@ -59,6 +59,18 @@ alias g="git"
 source "$BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
+# ── Tab: 단어 단위 수락 / Shift+Tab: 전체 수락 ──
+ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS=(forward-word emacs-forward-word)
+_tab_partial_or_complete() {
+  local b="$BUFFER"
+  zle forward-word
+  [[ "$BUFFER" == "$b" ]] && zle fzf-completion
+}
+zle -N _tab_partial_or_complete
+bindkey '^I' _tab_partial_or_complete
+bindkey '^[[Z' autosuggest-accept
+
+compdef k=kubectl
+
 # fast-syntax-highlighting은 반드시 맨 마지막
 source "$BREW_PREFIX/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
-compdef k=kubectl
