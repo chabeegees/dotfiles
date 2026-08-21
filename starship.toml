@@ -1,0 +1,66 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+[](mauve)\
+$directory\
+[](fg:mauve bg:blue)\
+$git_branch\
+$git_status\
+[](fg:blue) \
+$kubernetes\
+$cmd_duration\
+$character"""
+
+palette = 'catppuccin_mocha'
+add_newline = false
+
+[directory]
+style = "bg:mauve fg:crust"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol$branch ](fg:crust bg:blue)]($style)'
+
+[git_status]
+style = "bg:blue"
+format = '[[($all_status$ahead_behind )](fg:crust bg:blue)]($style)'
+
+# ── 핵심: 현재 클러스터/네임스페이스 표시 ──
+[kubernetes]
+disabled = false
+symbol = "⎈ "
+format = '[$symbol$context\($namespace\)](bold sky) '
+
+# EKS는 context가 긴 ARN이라 클러스터 이름만 추출
+[kubernetes.context_aliases]
+'arn:aws:eks:.*:cluster/(?P<cluster>[\w-]+)' = '$cluster'
+
+# prod 들어간 컨텍스트는 빨간색 경고
+[[kubernetes.contexts]]
+context_pattern = ".*prod.*"
+style = "bold red"
+symbol = "☠️  "
+
+[cmd_duration]
+min_time = 2_000
+format = "[ 󱎫 $duration](fg:overlay1) "
+
+[character]
+success_symbol = '[❯](bold green)'
+error_symbol = '[❯](bold red)'
+
+[line_break]
+disabled = true
+
+[palettes.catppuccin_mocha]
+mauve = "#cba6f7"
+blue = "#89b4fa"
+sky = "#89dceb"
+green = "#a6e3a1"
+red = "#f38ba8"
+overlay1 = "#7f849c"
+crust = "#11111b"
