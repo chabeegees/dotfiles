@@ -1,3 +1,8 @@
+# 원격 환경에서 알 수 없는 TERM이면 안전한 값으로 대체
+if ! infocmp "$TERM" >/dev/null 2>&1; then
+  export TERM=xterm-256color
+fi
+
 # ── 히스토리 ──
 HISTFILE=~/.zsh_history
 HISTSIZE=50000
