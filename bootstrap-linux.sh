@@ -9,11 +9,12 @@ sudo apt-get install -y -qq zsh git curl unzip ripgrep fzf \
 
 echo "▶ starship"
 command -v starship >/dev/null || \
-  curl -sS https://starship.rs/install.sh | sh -s -- -y
+  curl -sS https://starship.rs/install.sh | sudo sh -s -- -y -b /usr/local/bin
 
 echo "▶ zoxide"
 command -v zoxide >/dev/null || \
-  curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+  curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh \
+    | sudo sh -s -- --bin-dir /usr/local/bin
 
 echo "▶ 설정 링크"
 mkdir -p ~/.config
