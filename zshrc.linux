@@ -22,12 +22,20 @@ export EDITOR=vim
 export CLICOLOR=1
 alias k="kubectl"
 
-# ── 플러그인 (경로가 배포판마다 달라서 둘 다 시도) ──
+# ── 플러그인 (각각 한 번만 로드) ──
 for p in /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh \
-         ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh; do
-  [ -f "$p" ] && source "$p" && break
+         "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"; do
+  if [ -f "$p" ]; then
+    source "$p"
+    break
+  fi
 done
+
 for p in /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
-         ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh; do
-  [ -f "$p" ] && source "$p" && break
+         /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh \
+         "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"; do
+  if [ -f "$p" ]; then
+    source "$p"
+    break
+  fi
 done
